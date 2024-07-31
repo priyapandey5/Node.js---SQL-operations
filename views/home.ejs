@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    
+</head>
+<body>
+    <div class="container">
+        <h1>Hi, Welcome!</h1>
+        
+     <H2>Become a part of our vibrant community of 
+        <b style="color: red"><%= count %></b> users</H2>
+     <form method="GET" action="/user/new">
+        <button>JOIN US TODAY !</button>
+     </form>
+    </div>
+
+
+</body>
+</html>
+
+<style>
+    body{
+        background-color: F5F5FA;
+        text-align: center;
+    }
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        /* flex-wrap: nowrap;
+      justify-content: center; */
+    }
+    
+    h1{
+        /* display: inline-block; */
+        width: 400px;
+        height: 100px;
+        padding-top: 40px;
+        border-radius: 50px;
+        background: #F5F5FA;
+        box-shadow:  8px 8px 14px  #d0d0d5,
+        -8px -8px 14px #ffffff;
+    }
+    H2{
+       
+       width: 700px; 
+        height: 50px;
+        padding-top: 20px;
+        border-radius: 50px;
+        background: #F5F5FA;
+        box-shadow:  8px 8px 14px #d0d0d5,
+        -8px -8px 14px #ffffff;
+    }
+    button{
+        width: 150px;
+        height: 50px;
+        padding: 4px;
+        border-radius: 50px;
+        background: #F5F5FA;
+        box-shadow:  8px 8px 14px  #d0d0d5,
+        -8px -8px 14px #ffffff;
+    }
+</style>

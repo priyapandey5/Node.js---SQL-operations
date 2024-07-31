@@ -32,47 +32,15 @@ const connection = mysql.createConnection({
        faker.date.past(),
     ];
   };
-
-  // Using placeholders
-  //  let q = "INSERT INTO user (id, username, email, password, avatar_path, birthdate, registeredAt) VALUES ?";
-
-  // let data = [];
-  // for(let i=1; i<=100; i++){
-  //   data.push(getRandomUser());
-  // }
-  // let users = [
-  //   ["111", "AAApandey", "AAA@gmail.com", "hashed_password1", "avatar_path1", "2002-05-05", "2002-05-05"],
-  //   ["555", "BBBpandey", "BBB@gmail.com", "hashed_password2", "avatar_path2", "2000-06-07", "2002-05-05"],
-  // ];
-
-
-  // try{
-  // connection.query(q,[data], (err,result) => {
-  //     if(err) throw err;
-  //     console.log(result); // results contains rows returned by server
-  //   });
-  //   }catch(err){
-  //     console.log(err);
-  //   }
-  //     //console.log(fields); // fields contains extra meta data about results, if available
-  //  connection.end();
-
-  
-  //console.log(getRandomUser());
-
-  //get will fetch and show 
+ 
   app.get("/" , (req, res) => {
-    //res.send("welcome");
     let q = `SELECT count(*) FROM user`;
     try{
       connection.query(q, (err,result) => {
           if(err) throw err;
          let count = result[0]["count(*)"];
-         console.log(result); // results contains rows returned by server
-         // res.send(result);
-          //res.send(result[0]);
+         console.log(result); 
           res.render("home.ejs",{count});
-          
         });
         }catch(err){
           console.log(err);
@@ -86,8 +54,6 @@ const connection = mysql.createConnection({
     try{
       connection.query(q,(err, users) => {
         if(err) throw err;
-       // console.log(users);
-        //res.send(users);
         res.render("showusers.ejs",{users});
       });
     }catch(err) {
@@ -96,18 +62,14 @@ const connection = mysql.createConnection({
     }
   });
 
-
   //EDIT ROUTE
  app.get("/user/:id/edit",(req,res) =>{
   let {id} = req.params;
-  let q = ` SELECT * FROM user WHERE id = '${id}'`; // to edit only that which you want
-  //console.log(id);
-  //res.render("edit.ejs");
+  let q = ` SELECT * FROM user WHERE id = '${id}'`; 
   try{
     connection.query(q,(err,result) => {
       if(err) throw err;
-     // console.log(result); // isse ek array me result aata jise hm ejs me nahi dalte
-     let user = result[0]; // isse object me result aata hai array ka 0t elemnt jise m ejs me dal sakte hai
+     let user = result[0];
      console.log("edited");
      res.render("edit.ejs",{user});
     });
@@ -116,18 +78,14 @@ const connection = mysql.createConnection({
     res.send("some err in db");
   }
  });
-
- //update
  app.patch("/user/:id" , (req,res) => {
-  //res.send("updated");
   let {id} = req.params;
   let {password:formPass, username:newUsername} = req.body;
   let q = `SELECT * FROM user WHERE id='${id}'`;
   try{
     connection.query(q, (err,result) => {
       if(err) throw err;
-     // console.log(result); // isse ek array me result aata jise hm ejs me nahi dalte
-     let user = result[0]; // isse object me result aata hai array ka 0t elemnt jise m ejs me dal sakte hai
+     let user = result[0];
      console.log(user);
      if(formPass != user.password){
         res.send("wrong Password");
@@ -135,7 +93,6 @@ const connection = mysql.createConnection({
         let q2 = `UPDATE user SET username = '${newUsername}' WHERE id = '${id}'`;
         connection.query(q2, (err,result) => {
           if(err) throw err;
-          //res.send(result);
           res.redirect("/user");
         });
       }
@@ -167,7 +124,6 @@ app.post("/user/new",(req,res) => {
           }
 });
 
-
 //TO Delete
  app.get("/user/:id/delete", (req, res) => {
   let { id } = req.params;
@@ -184,7 +140,6 @@ app.post("/user/new",(req,res) => {
   }
 });
 
- //delete
  app.delete("/user/:id/",(req,res) => {
   let {id} = req.params;
   let {password} = req.body;
@@ -192,16 +147,12 @@ app.post("/user/new",(req,res) => {
   try{
     connection.query(q,(err,result) => {
       if(err)throw err;
-      //console.log(result);
       let user = result[0];
-      //console.log(user);
       if(user.password != password){
         res.send("wrong password or email");
       }else{
         let q2 = `DELETE FROM user WHERE id = '${id}'`;
         connection.query(q2, (err,result) => {
-
-          
           if(err) throw err;
           console.log(result);
             console.log("deleted!");
